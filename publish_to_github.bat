@@ -63,7 +63,7 @@ REM ================================
 REM COMMIT
 REM ================================
 echo Criando commit...
-git commit -m "Primeira versão do app TabuadaHora"
+git commit -m "Primeira versao do app TabuadaHora"
 
 REM ================================
 REM CONFIGURA BRANCH
