@@ -8,12 +8,13 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
-import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import com.example.fouroperations.model.Operation
 import com.example.fouroperations.ui.game.GameScreen
 import com.example.fouroperations.ui.game.GameViewModel
 import com.example.fouroperations.ui.result.ResultScreen
+import com.example.fouroperations.ui.theme.FourOperationsTheme
 import com.example.fouroperations.util.SoundManager
 
 private enum class Route { MENU, GAME, RESULT }
@@ -29,7 +30,7 @@ class MainActivity : ComponentActivity() {
         sounds = SoundManager(this)
 
         setContent {
-            MaterialTheme {
+            FourOperationsTheme {
                 AppRoot(vm, sounds)
             }
         }

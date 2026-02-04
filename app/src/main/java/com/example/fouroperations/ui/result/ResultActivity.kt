@@ -15,6 +15,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.fouroperations.ui.theme.FredokaFamily
 
 @Composable
 fun ResultScreen(
@@ -46,28 +47,31 @@ fun ResultScreen(
 
         Text(
             text = "Resultado",
-            fontSize = 34.sp,
+            fontSize = 38.sp,
             fontWeight = FontWeight.ExtraBold,
-            color = MaterialTheme.colorScheme.onPrimaryContainer
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
+            fontFamily = FredokaFamily
         )
 
         Spacer(Modifier.height(24.dp))
 
         Text(
             text = "⭐ $stars / $max",
-            fontSize = 44.sp,
+            fontSize = 48.sp,
             fontWeight = FontWeight.ExtraBold,
             modifier = Modifier.scale(scale),
-            color = MaterialTheme.colorScheme.onPrimaryContainer
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
+            fontFamily = FredokaFamily
         )
 
         Spacer(Modifier.height(12.dp))
 
         Text(
             text = message,
-            fontSize = 24.sp,
+            fontSize = 26.sp,
             fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.onPrimaryContainer
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
+            fontFamily = FredokaFamily
         )
 
         Spacer(Modifier.weight(1f))
@@ -76,10 +80,15 @@ fun ResultScreen(
             onClick = onPlayAgain,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(64.dp),
+                .height(72.dp),
             shape = RoundedCornerShape(18.dp)
         ) {
-            Text("Jogar de novo", fontSize = 22.sp, fontWeight = FontWeight.Bold)
+            Text(
+                "Jogar de novo",
+                fontSize = 26.sp,
+                fontWeight = FontWeight.Bold,
+                fontFamily = FredokaFamily
+            )
         }
 
         Spacer(Modifier.height(12.dp))

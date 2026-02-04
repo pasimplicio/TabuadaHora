@@ -55,7 +55,7 @@ object RandomGenerator {
     fun generateOptions(correct: Int): List<Int> {
         val set = linkedSetOf(correct)
         // gera opções "perto" do correto, sem negativar
-        while (set.size < 3) {
+        while (set.size < 4) {
             val delta = Random.nextInt(-2, 3) // -2..2
             val candidate = (correct + delta).coerceAtLeast(0)
             set.add(candidate)

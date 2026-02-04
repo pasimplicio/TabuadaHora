@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.update
 data class GameUiState(
     val operation: Operation? = null,
     val stars: Int = 0,
+    val errors: Int = 0,
     val questionCount: Int = 0,
     val maxQuestions: Int = 10,
     val current: Problem? = null,
@@ -60,6 +61,7 @@ class GameViewModel : ViewModel() {
         _ui.update {
             it.copy(
                 stars = it.stars + if (correct) 1 else 0,
+                errors = it.errors + if (correct) 0 else 1,
                 lastWasCorrect = correct
             )
         }

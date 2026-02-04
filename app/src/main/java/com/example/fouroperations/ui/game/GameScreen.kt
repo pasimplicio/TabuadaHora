@@ -1,19 +1,34 @@
 package com.example.fouroperations.ui.game
 
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.fouroperations.ui.components.ThreeDButton
+import com.example.fouroperations.ui.components.ThreeDSurface
+import com.example.fouroperations.ui.theme.FredokaFamily
 
 @Composable
 fun GameScreen(
@@ -29,20 +44,14 @@ fun GameScreen(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            Text("Preparando o jogo… 😊", fontSize = 22.sp)
+            Text(
+                "Preparando o jogo… 😊",
+                fontSize = 22.sp,
+                fontFamily = FredokaFamily
+            )
         }
         return
     }
-
-    val scale by animateFloatAsState(
-        targetValue = when (ui.lastWasCorrect) {
-            true -> 1.05f
-            false -> 0.97f
-            null -> 1f
-        },
-        animationSpec = tween(180),
-        label = "scale"
-    )
 
     val bgColor by animateColorAsState(
         targetValue = when (ui.lastWasCorrect) {
@@ -53,77 +62,193 @@ fun GameScreen(
         label = "bg"
     )
 
+    val question = ui.current
+    val playfulFont = FredokaFamily
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(bgColor)
-            .padding(20.dp)
-            .scale(scale),
+            .padding(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text("⭐ ${ui.stars}", fontSize = 22.sp, fontWeight = FontWeight.Bold)
-            Text("${ui.questionCount}/${ui.maxQuestions}", fontSize = 18.sp)
-        }
-
-        Spacer(Modifier.height(24.dp))
-
-        Text(
-            text = ui.current!!.text(),
-            fontSize = 34.sp,
-            fontWeight = FontWeight.ExtraBold
-        )
-
-        Spacer(Modifier.height(24.dp))
-
-        Column(
-            verticalArrangement = Arrangement.spacedBy(14.dp),
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            ui.options.forEach { opt ->
-                Button(
-                    onClick = {
-                        onAnswer(opt)
-                        if (opt == ui.current.answer) onCorrect() else onWrong()
-                    },
-                    enabled = ui.lastWasCorrect == null,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(68.dp),
-                    shape = RoundedCornerShape(18.dp)
-                ) {
-                    Text(opt.toString(), fontSize = 26.sp, fontWeight = FontWeight.Bold)
-                }
-            }
+            ScoreBadge(
+                label = "Acertos",
+                value = ui.stars,
+                color = Color(0xFF4CAF50),
+                modifier = Modifier.weight(1f)
+            )
+            ScoreBadge(
+                label = "Erros",
+                value = ui.errors,
+                color = Color(0xFFE53935),
+                modifier = Modifier.weight(1f)
+            )
         }
 
         Spacer(Modifier.height(16.dp))
 
-        when (ui.lastWasCorrect) {
-            true -> Text("Muito bem! 🎉", fontSize = 22.sp, fontWeight = FontWeight.Bold)
-            false -> Text("Tenta de novo 🙂", fontSize = 22.sp, fontWeight = FontWeight.Bold)
-            null -> {}
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1.1f),
+            contentAlignment = Alignment.Center
+        ) {
+            if (question != null) {
+                val resultText = when (ui.lastWasCorrect) {
+                    true -> question.answer.toString()
+                    false -> "X"
+                    null -> "?"
+                }
+                val resultColor = when (ui.lastWasCorrect) {
+                    true -> Color(0xFF2E7D32)
+                    false -> Color(0xFFD32F2F)
+                    null -> MaterialTheme.colorScheme.onSecondaryContainer
+                }
+
+                Text(
+                    text = buildAnnotatedString {
+                        append("${question.a} ${question.op.symbol} ${question.b} = ")
+                        withStyle(SpanStyle(color = resultColor)) {
+                            append(resultText)
+                        }
+                    },
+                    fontSize = 36.sp,
+                    lineHeight = 42.sp,
+                    fontWeight = FontWeight.ExtraBold,
+                    color = MaterialTheme.colorScheme.onSecondaryContainer,
+                    fontFamily = playfulFont
+                )
+            }
         }
 
-        Spacer(Modifier.weight(1f))
+        val optionColors = listOf(
+            Color(0xFF39B8FF),
+            Color(0xFFFF8A00),
+            Color(0xFFFFC400),
+            Color(0xFF7B6CF6)
+        )
+
+        Column(
+            verticalArrangement = Arrangement.spacedBy(14.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(2.4f)
+        ) {
+            ui.options.chunked(2).forEachIndexed { rowIndex, rowOptions ->
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(14.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                ) {
+                    rowOptions.forEachIndexed { colIndex, opt ->
+                        val color = optionColors[(rowIndex * 2 + colIndex) % optionColors.size]
+                        ThreeDButton(
+                            text = opt.toString(),
+                            onClick = {
+                                onAnswer(opt)
+                                if (opt == question?.answer) onCorrect() else onWrong()
+                            },
+                            enabled = ui.lastWasCorrect == null,
+                            containerColor = color,
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxHeight(),
+                            height = null,
+                            fontSize = 30.sp,
+                            fontFamily = playfulFont
+                        )
+                    }
+                    if (rowOptions.size == 1) {
+                        Spacer(Modifier.weight(1f))
+                    }
+                }
+            }
+        }
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.6f),
+            contentAlignment = Alignment.Center
+        ) {
+            when (ui.lastWasCorrect) {
+                true -> Text(
+                    "Muito bem! 🎉",
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = playfulFont
+                )
+                false -> Text(
+                    "Tenta de novo 🙂",
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = playfulFont
+                )
+                null -> {}
+            }
+        }
 
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            Button(
+            ThreeDButton(
+                text = "Sair",
                 onClick = onQuit,
-                modifier = Modifier.weight(1f)
-            ) { Text("Sair") }
+                containerColor = Color(0xFF6D4C41),
+                modifier = Modifier.weight(1f),
+                fontFamily = playfulFont,
+                height = 80.dp,
+                fontSize = 26.sp
+            )
 
-            Button(
+            ThreeDButton(
+                text = "Próxima",
                 onClick = onNext,
                 enabled = ui.lastWasCorrect != null,
-                modifier = Modifier.weight(1f)
-            ) { Text("Próxima") }
+                containerColor = Color(0xFF009688),
+                modifier = Modifier.weight(1f),
+                fontFamily = playfulFont,
+                height = 80.dp,
+                fontSize = 26.sp
+            )
+        }
+    }
+}
+
+@Composable
+private fun ScoreBadge(
+    label: String,
+    value: Int,
+    color: Color,
+    modifier: Modifier = Modifier
+) {
+    ThreeDSurface(
+        containerColor = color,
+        modifier = modifier,
+        height = 72.dp
+    ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(
+                text = value.toString(),
+                fontSize = 24.sp,
+                fontWeight = FontWeight.ExtraBold,
+                color = Color.White,
+                fontFamily = FredokaFamily
+            )
+            Text(
+                text = label,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White,
+                fontFamily = FredokaFamily
+            )
         }
     }
 }
