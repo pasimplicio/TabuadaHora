@@ -46,6 +46,14 @@ fun MenuScreen(
             color = Color(0xFF6B2F0D),
             fontFamily = playfulFont
         )
+        Text(
+            text = "Aprenda brincando!",
+            fontSize = 26.sp,
+            fontWeight = FontWeight.ExtraBold,
+            color = Color(0xFF6B2F0D),
+            fontFamily = playfulFont
+        )
+
 
         Spacer(Modifier.weight(0.6f))
 
@@ -110,7 +118,7 @@ fun MenuScreen(
         Spacer(Modifier.weight(0.8f))
 
         Text(
-            text = "Toque na resposta certa para ganhar ⭐",
+            text = "Escolha a operação que deseja! ⭐",
             color = Color(0xFF6B2F0D),
             fontFamily = playfulFont,
             fontSize = 18.sp

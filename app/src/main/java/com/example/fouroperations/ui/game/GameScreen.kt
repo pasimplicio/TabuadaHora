@@ -117,8 +117,8 @@ fun GameScreen(
                             append(resultText)
                         }
                     },
-                    fontSize = 36.sp,
-                    lineHeight = 42.sp,
+                    fontSize = 42.sp,
+                    lineHeight = 48.sp,
                     fontWeight = FontWeight.ExtraBold,
                     color = MaterialTheme.colorScheme.onSecondaryContainer,
                     fontFamily = playfulFont
@@ -160,7 +160,7 @@ fun GameScreen(
                                 .weight(1f)
                                 .fillMaxHeight(),
                             height = null,
-                            fontSize = 30.sp,
+                            fontSize = 34.sp,
                             fontFamily = playfulFont
                         )
                     }
@@ -179,13 +179,13 @@ fun GameScreen(
         ) {
             when (ui.lastWasCorrect) {
                 true -> Text(
-                    "Muito bem! 🎉",
+                    "Parabéns, você acertou! 🎉",
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = playfulFont
                 )
                 false -> Text(
-                    "Tenta de novo 🙂",
+                    "Que pena, Tenta de novo 🙂",
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = playfulFont

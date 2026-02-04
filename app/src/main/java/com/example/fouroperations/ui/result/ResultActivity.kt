@@ -32,6 +32,7 @@ fun ResultScreen(
     val message = when {
         stars == max -> "Perfeito! 🌟🌟🌟"
         stars >= (max * 0.7) -> "Mandou bem! 🎉"
+        stars in 5..6 -> "Tá chegando lá!"
         stars >= (max * 0.4) -> "Muito bom! 😊"
         else -> "Vamos treinar mais! 💪🙂"
     }
