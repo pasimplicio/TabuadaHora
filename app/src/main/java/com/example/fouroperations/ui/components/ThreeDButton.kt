@@ -40,7 +40,7 @@ fun ThreeDSurface(
     modifier: Modifier = Modifier,
     onClick: (() -> Unit)? = null,
     enabled: Boolean = true,
-    shape: Shape = RoundedCornerShape(18.dp),
+    shape: Shape = RoundedCornerShape(26.dp),
     height: Dp? = null,
     content: @Composable BoxScope.() -> Unit
 ) {
@@ -54,7 +54,7 @@ fun ThreeDSurface(
         label = "offsetY"
     )
     val elevation by animateDpAsState(
-        targetValue = if (pressed && isInteractive) 4.dp else 10.dp,
+        targetValue = if (pressed && isInteractive) 6.dp else 14.dp,
         animationSpec = tween(140),
         label = "elevation"
     )

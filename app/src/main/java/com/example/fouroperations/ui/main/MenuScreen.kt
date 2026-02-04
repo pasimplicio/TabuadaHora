@@ -1,6 +1,7 @@
 package com.example.fouroperations.ui.main
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,11 +18,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.fouroperations.R
 import com.example.fouroperations.model.Operation
 import com.example.fouroperations.ui.components.ThreeDSurface
 import com.example.fouroperations.ui.theme.FredokaFamily
@@ -39,23 +42,13 @@ fun MenuScreen(
             .padding(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = "TabuadaHora!",
-            fontSize = 38.sp,
-            fontWeight = FontWeight.ExtraBold,
-            color = Color(0xFF6B2F0D),
-            fontFamily = playfulFont
-        )
-        Text(
-            text = "Aprenda brincando!",
-            fontSize = 26.sp,
-            fontWeight = FontWeight.ExtraBold,
-            color = Color(0xFF6B2F0D),
-            fontFamily = playfulFont
+        Image(
+            painter = painterResource(id = R.drawable.logo),
+            contentDescription = "TabuadaHora",
+            modifier = Modifier.height(200.dp)
         )
 
-
-        Spacer(Modifier.weight(0.6f))
+        Spacer(Modifier.weight(0.2f))
 
         BannerLabel(text = "Adição e Subtração")
 
@@ -118,11 +111,15 @@ fun MenuScreen(
         Spacer(Modifier.weight(0.8f))
 
         Text(
-            text = "Escolha a operação que deseja! ⭐",
+            text = "Aprenda as operações brincando! ⭐",
             color = Color(0xFF6B2F0D),
             fontFamily = playfulFont,
             fontSize = 18.sp
         )
+
+        Spacer(Modifier.height(16.dp))
+
+        FooterCredits()
     }
 }
 
@@ -174,6 +171,67 @@ private fun BannerLabel(text: String) {
             modifier = Modifier.padding(vertical = 6.dp, horizontal = 12.dp),
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
+            color = Color.White,
+            fontFamily = FredokaFamily
+        )
+    }
+}
+
+@Composable
+private fun FooterCredits() {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color(0xFFFF7A5C), shape = MaterialTheme.shapes.medium)
+            .padding(vertical = 10.dp, horizontal = 12.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "Desenvolvido por © Paulo Simplicio",
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.White,
+            fontFamily = FredokaFamily
+        )
+        Spacer(Modifier.height(6.dp))
+        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            SocialHandle(
+                iconRes = R.drawable.ic_instagram,
+                contentDescription = "Instagram",
+                handle = "@pasimplicio"
+            )
+            SocialHandle(
+                iconRes = R.drawable.ic_tiktok,
+                contentDescription = "TikTok",
+                handle = "@pasimplicio"
+            )
+            SocialHandle(
+                iconRes = R.drawable.ic_facebook,
+                contentDescription = "Facebook",
+                handle = "@pasimplicio"
+            )
+        }
+    }
+}
+
+@Composable
+private fun SocialHandle(
+    iconRes: Int,
+    contentDescription: String,
+    handle: String
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(4.dp)
+    ) {
+        Image(
+            painter = painterResource(id = iconRes),
+            contentDescription = contentDescription,
+            modifier = Modifier.height(14.dp)
+        )
+        Text(
+            text = handle,
+            fontSize = 12.sp,
             color = Color.White,
             fontFamily = FredokaFamily
         )
