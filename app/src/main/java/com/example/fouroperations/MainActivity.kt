@@ -8,16 +8,18 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalContext
 import com.example.fouroperations.model.Operation
 import com.example.fouroperations.ui.game.GameScreen
 import com.example.fouroperations.ui.game.GameViewModel
 import com.example.fouroperations.ui.result.ResultScreen
 import com.example.fouroperations.ui.theme.FourOperationsTheme
 import com.example.fouroperations.util.SoundManager
+import com.example.fouroperations.util.UserPrefs
+import com.example.fouroperations.util.UserProfile
 
-private enum class Route { MENU, GAME, RESULT }
+private enum class Route { USER_GATE, MENU, GAME, RESULT }
 
 class MainActivity : ComponentActivity() {
 
@@ -47,15 +49,31 @@ private fun AppRoot(
     vm: GameViewModel,
     sounds: SoundManager
 ) {
-    var route by remember { mutableStateOf(Route.MENU) }
+    val context = LocalContext.current
+    var route by remember { mutableStateOf(Route.USER_GATE) }
     val ui by vm.ui.collectAsState()
+    var users by remember { mutableStateOf(listOf<UserProfile>()) }
+    var activeUserId by remember { mutableStateOf("") }
 
     LaunchedEffect(Unit) {
         vm.reset()
+        users = UserPrefs.getUsers(context)
+        activeUserId = UserPrefs.getActiveUserId(context)
     }
 
     LaunchedEffect(ui.finished) {
-        if (ui.finished) route = Route.RESULT
+        if (ui.finished) {
+            val op = ui.operation
+            if (op != null && activeUserId.isNotBlank()) {
+                users = UserPrefs.updateBestScore(
+                    context = context,
+                    userId = activeUserId,
+                    operationId = op.name,
+                    score = ui.stars
+                )
+            }
+            route = Route.RESULT
+        }
     }
 
     AnimatedContent(
@@ -64,6 +82,21 @@ private fun AppRoot(
         label = "route"
     ) { r ->
         when (r) {
+            Route.USER_GATE -> UserGateScreen(
+                users = users,
+                activeUserId = activeUserId,
+                maxScore = ui.maxQuestions,
+                onAddUser = { name ->
+                    val newUser = UserPrefs.addUser(context, name)
+                    users = UserPrefs.getUsers(context)
+                    activeUserId = newUser.id
+                },
+                onSelectUser = { userId ->
+                    activeUserId = userId
+                    UserPrefs.setActiveUserId(context, userId)
+                    route = Route.MENU
+                }
+            )
             Route.MENU -> MenuScreen(
                 onPick = {
                     vm.start(it)
@@ -77,7 +110,7 @@ private fun AppRoot(
                 onWrong = sounds::playWrong,
                 onNext = vm::nextQuestion,
                 onQuit = {
-                    route = Route.MENU
+                    route = Route.USER_GATE
                     vm.reset()
                 }
             )
@@ -86,7 +119,7 @@ private fun AppRoot(
                 max = ui.maxQuestions,
                 onPlayAgain = {
                     vm.reset()
-                    route = Route.MENU
+                    route = Route.USER_GATE
                 }
             )
         }

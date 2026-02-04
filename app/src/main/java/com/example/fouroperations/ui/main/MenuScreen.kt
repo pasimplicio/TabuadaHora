@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -39,16 +41,17 @@ fun MenuScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFFFFF2E9))
+            .verticalScroll(rememberScrollState())
             .padding(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
             painter = painterResource(id = R.drawable.logo),
-            contentDescription = "TabuadaHora",
-            modifier = Modifier.height(200.dp)
+            contentDescription = "TabuadadaHora",
+            modifier = Modifier.height(100.dp)
         )
 
-        Spacer(Modifier.weight(0.2f))
+        Spacer(Modifier.height(24.dp))
 
         BannerLabel(text = "Adição e Subtração")
 
@@ -78,7 +81,7 @@ fun MenuScreen(
             )
         }
 
-        Spacer(Modifier.weight(0.4f))
+        Spacer(Modifier.height(20.dp))
 
         BannerLabel(text = "Multiplicação e Divisão")
 
@@ -108,10 +111,10 @@ fun MenuScreen(
             )
         }
 
-        Spacer(Modifier.weight(0.8f))
+        Spacer(Modifier.height(28.dp))
 
         Text(
-            text = "Aprenda as operações brincando! ⭐",
+            text = "Toque na resposta certa para ganhar ⭐",
             color = Color(0xFF6B2F0D),
             fontFamily = playfulFont,
             fontSize = 18.sp
@@ -193,7 +196,7 @@ private fun FooterCredits() {
             color = Color.White,
             fontFamily = FredokaFamily
         )
-        Spacer(Modifier.height(6.dp))
+        Spacer(Modifier.height(5.dp))
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             SocialHandle(
                 iconRes = R.drawable.ic_instagram,

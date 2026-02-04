@@ -12,7 +12,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -64,11 +67,13 @@ fun GameScreen(
 
     val question = ui.current
     val playfulFont = FredokaFamily
+    val remainingAttempts = (ui.maxQuestions - ui.questionCount + 1).coerceAtLeast(0)
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(bgColor)
+            .verticalScroll(rememberScrollState())
             .padding(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -92,10 +97,23 @@ fun GameScreen(
 
         Spacer(Modifier.height(16.dp))
 
+        ThreeDButton(
+            text = "Tentativas restantes: $remainingAttempts",
+            onClick = {},
+            enabled = false,
+            containerColor = Color(0xFF8D6E63),
+            modifier = Modifier.fillMaxWidth(),
+            fontFamily = playfulFont,
+            height = 54.dp,
+            fontSize = 18.sp
+        )
+
+        Spacer(Modifier.height(12.dp))
+
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(1.1f),
+                .heightIn(min = 140.dp),
             contentAlignment = Alignment.Center
         ) {
             if (question != null) {
@@ -137,7 +155,7 @@ fun GameScreen(
             verticalArrangement = Arrangement.spacedBy(14.dp),
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(2.4f)
+                .heightIn(min = 260.dp)
         ) {
             ui.options.chunked(2).forEachIndexed { rowIndex, rowOptions ->
                 Row(
@@ -174,18 +192,18 @@ fun GameScreen(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(0.6f),
+                .heightIn(min = 72.dp),
             contentAlignment = Alignment.Center
         ) {
             when (ui.lastWasCorrect) {
                 true -> Text(
-                    "Parabéns, você acertou! 🎉",
+                    "Muito bem! 🎉",
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = playfulFont
                 )
                 false -> Text(
-                    "Que pena, Tenta de novo 🙂",
+                    "Tenta de novo 🙂",
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = playfulFont

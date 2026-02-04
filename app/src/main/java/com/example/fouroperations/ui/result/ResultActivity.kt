@@ -3,6 +3,8 @@ package com.example.fouroperations.ui.result
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -41,6 +43,7 @@ fun ResultScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.primaryContainer)
+            .verticalScroll(rememberScrollState())
             .padding(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -75,7 +78,7 @@ fun ResultScreen(
             fontFamily = FredokaFamily
         )
 
-        Spacer(Modifier.weight(1f))
+        Spacer(Modifier.height(24.dp))
 
         Button(
             onClick = onPlayAgain,
