@@ -48,7 +48,7 @@ fun MenuScreen(
         Image(
             painter = painterResource(id = R.drawable.logo),
             contentDescription = "TabuadadaHora",
-            modifier = Modifier.height(100.dp)
+            modifier = Modifier.height(200.dp)
         )
 
         Spacer(Modifier.height(24.dp))
@@ -122,7 +122,7 @@ fun MenuScreen(
 
         Spacer(Modifier.height(16.dp))
 
-        FooterCredits()
+        /*FooterCredits()*/
     }
 }
 
@@ -180,42 +180,6 @@ private fun BannerLabel(text: String) {
     }
 }
 
-@Composable
-private fun FooterCredits() {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(Color(0xFFFF7A5C), shape = MaterialTheme.shapes.medium)
-            .padding(vertical = 10.dp, horizontal = 12.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = "Desenvolvido por © Paulo Simplicio",
-            fontSize = 14.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.White,
-            fontFamily = FredokaFamily
-        )
-        Spacer(Modifier.height(5.dp))
-        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            SocialHandle(
-                iconRes = R.drawable.ic_instagram,
-                contentDescription = "Instagram",
-                handle = "@pasimplicio"
-            )
-            SocialHandle(
-                iconRes = R.drawable.ic_tiktok,
-                contentDescription = "TikTok",
-                handle = "@pasimplicio"
-            )
-            SocialHandle(
-                iconRes = R.drawable.ic_facebook,
-                contentDescription = "Facebook",
-                handle = "@pasimplicio"
-            )
-        }
-    }
-}
 
 @Composable
 private fun SocialHandle(

@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,9 +15,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -60,20 +58,11 @@ fun UserGateScreen(
         Spacer(Modifier.height(16.dp))
         Image(
             painter = painterResource(id = R.drawable.logo),
-            contentDescription = "TabuadadaHora",
-            modifier = Modifier.height(72.dp)
+            contentDescription = "TabuadaHora",
+            modifier = Modifier.height(200.dp)
         )
 
         Spacer(Modifier.height(24.dp))
-
-        ThreeDButton(
-            text = "Cadastrar novo usuário",
-            onClick = { isDialogOpen = true },
-            containerColor = Color(0xFF009688),
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(Modifier.height(16.dp))
 
         Text(
             text = "Escolha um usuário",
@@ -85,11 +74,19 @@ fun UserGateScreen(
 
         Spacer(Modifier.height(12.dp))
 
+        ThreeDButton(
+            text = "Cadastrar novo usuário",
+            onClick = { isDialogOpen = true },
+            containerColor = Color(0xFF009688),
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(Modifier.height(16.dp))
+
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f),
-            contentPadding = PaddingValues(bottom = 12.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             if (users.isEmpty()) {
@@ -113,6 +110,10 @@ fun UserGateScreen(
             }
         }
 
+        Spacer(Modifier.height(16.dp))
+
+        FooterCredits()
+
         if (isDialogOpen) {
             AlertDialog(
                 onDismissRequest = {
@@ -120,16 +121,7 @@ fun UserGateScreen(
                     nameInput = ""
                     nameError = null
                 },
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                textContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                title = {
-                    Text(
-                        text = "Novo usuário",
-                        fontFamily = FredokaFamily,
-                        fontWeight = FontWeight.Bold
-                    )
-                },
+                title = { Text("Novo usuário") },
                 text = {
                     Column {
                         OutlinedTextField(
@@ -139,31 +131,15 @@ fun UserGateScreen(
                                 nameError = null
                             },
                             modifier = Modifier.fillMaxWidth(),
-                            label = {
-                                Text(
-                                    text = "Nome do usuário",
-                                    fontFamily = FredokaFamily
-                                )
-                            },
-                            singleLine = true,
-                            colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = MaterialTheme.colorScheme.primary,
-                                unfocusedBorderColor = MaterialTheme.colorScheme.secondary,
-                                focusedLabelColor = MaterialTheme.colorScheme.primary,
-                                unfocusedLabelColor = MaterialTheme.colorScheme.secondary,
-                                cursorColor = MaterialTheme.colorScheme.primary
-                            ),
-                            textStyle = MaterialTheme.typography.bodyLarge.copy(
-                                fontFamily = FredokaFamily
-                            )
+                            label = { Text("Nome do usuário") },
+                            singleLine = true
                         )
                         if (nameError != null) {
                             Spacer(Modifier.height(8.dp))
                             Text(
                                 text = nameError.orEmpty(),
-                                color = MaterialTheme.colorScheme.error,
-                                fontSize = 12.sp,
-                                fontFamily = FredokaFamily
+                                color = Color(0xFFB00020),
+                                fontSize = 12.sp
                             )
                         }
                     }
@@ -188,12 +164,7 @@ fun UserGateScreen(
                             }
                         }
                     ) {
-                        Text(
-                            text = "Cadastrar",
-                            color = MaterialTheme.colorScheme.primary,
-                            fontFamily = FredokaFamily,
-                            fontWeight = FontWeight.Bold
-                        )
+                        Text("Cadastrar")
                     }
                 },
                 dismissButton = {
@@ -204,12 +175,7 @@ fun UserGateScreen(
                             nameError = null
                         }
                     ) {
-                        Text(
-                            text = "Cancelar",
-                            color = MaterialTheme.colorScheme.secondary,
-                            fontFamily = FredokaFamily,
-                            fontWeight = FontWeight.Bold
-                        )
+                        Text("Cancelar")
                     }
                 }
             )
@@ -268,6 +234,67 @@ private fun ScorePill(
         )
         Text(
             text = "$score/$maxScore",
+            fontSize = 12.sp,
+            color = Color.White,
+            fontFamily = FredokaFamily
+        )
+    }
+}
+
+@Composable
+private fun FooterCredits() {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color(0xFFFF7A5C), shape = MaterialTheme.shapes.medium)
+            .padding(vertical = 10.dp, horizontal = 12.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "© Paulo Simplicio",
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.White,
+            fontFamily = FredokaFamily
+        )
+        Spacer(Modifier.height(6.dp))
+        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            SocialHandle(
+                iconRes = R.drawable.ic_instagram,
+                contentDescription = "Instagram",
+                handle = "@pasimplicio"
+            )
+            SocialHandle(
+                iconRes = R.drawable.ic_tiktok,
+                contentDescription = "TikTok",
+                handle = "@pasimplicio"
+            )
+            SocialHandle(
+                iconRes = R.drawable.ic_facebook,
+                contentDescription = "Facebook",
+                handle = "@pasimplicio"
+            )
+        }
+    }
+}
+
+@Composable
+private fun SocialHandle(
+    iconRes: Int,
+    contentDescription: String,
+    handle: String
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(4.dp)
+    ) {
+        Image(
+            painter = painterResource(id = iconRes),
+            contentDescription = contentDescription,
+            modifier = Modifier.height(14.dp)
+        )
+        Text(
+            text = handle,
             fontSize = 12.sp,
             color = Color.White,
             fontFamily = FredokaFamily
