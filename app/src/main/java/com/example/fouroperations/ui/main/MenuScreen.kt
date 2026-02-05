@@ -114,10 +114,10 @@ fun MenuScreen(
         Spacer(Modifier.height(28.dp))
 
         Text(
-            text = "Toque na resposta certa para ganhar ⭐",
+            text = "Escolha a operação e manda ver!⭐",
             color = Color(0xFF6B2F0D),
             fontFamily = playfulFont,
-            fontSize = 18.sp
+            fontSize = 20.sp
         )
 
         Spacer(Modifier.height(16.dp))

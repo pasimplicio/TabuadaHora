@@ -62,16 +62,6 @@ fun UserGateScreen(
             modifier = Modifier.height(200.dp)
         )
 
-        Spacer(Modifier.height(24.dp))
-
-        Text(
-            text = "Escolha um usuário",
-            fontSize = 22.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color(0xFF6B2F0D),
-            fontFamily = FredokaFamily
-        )
-
         Spacer(Modifier.height(12.dp))
 
         ThreeDButton(
@@ -81,7 +71,16 @@ fun UserGateScreen(
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.height(12.dp))
+        Text(
+            text = "Escolha um usuário",
+            fontSize = 22.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color(0xFF6B2F0D),
+            fontFamily = FredokaFamily
+        )
+
+        Spacer(Modifier.height(12.dp))
 
         LazyColumn(
             modifier = Modifier
@@ -247,18 +246,18 @@ private fun FooterCredits() {
         modifier = Modifier
             .fillMaxWidth()
             .background(Color(0xFFFF7A5C), shape = MaterialTheme.shapes.medium)
-            .padding(vertical = 10.dp, horizontal = 12.dp),
+            .padding(vertical = 20.dp, horizontal = 12.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "© Paulo Simplicio",
+            text = "Desenvolvido por ©Paulo Simplicio",
             fontSize = 14.sp,
             fontWeight = FontWeight.Bold,
             color = Color.White,
             fontFamily = FredokaFamily
         )
         Spacer(Modifier.height(6.dp))
-        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(1.dp)) {
             SocialHandle(
                 iconRes = R.drawable.ic_instagram,
                 contentDescription = "Instagram",
