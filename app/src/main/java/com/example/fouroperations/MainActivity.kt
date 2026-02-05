@@ -101,6 +101,9 @@ private fun AppRoot(
                 onPick = {
                     vm.start(it)
                     route = Route.GAME
+                },
+                onExit = {
+                    route = Route.USER_GATE
                 }
             )
             Route.GAME -> GameScreen(

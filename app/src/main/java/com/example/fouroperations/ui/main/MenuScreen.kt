@@ -28,12 +28,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.fouroperations.R
 import com.example.fouroperations.model.Operation
+import com.example.fouroperations.ui.components.ThreeDButton
 import com.example.fouroperations.ui.components.ThreeDSurface
 import com.example.fouroperations.ui.theme.FredokaFamily
 
 @Composable
 fun MenuScreen(
-    onPick: (Operation) -> Unit
+    onPick: (Operation) -> Unit,
+    onExit: () -> Unit = {}
 ) {
     val playfulFont = FredokaFamily
 
@@ -114,13 +116,25 @@ fun MenuScreen(
         Spacer(Modifier.height(28.dp))
 
         Text(
-            text = "Escolha a operação e manda ver!⭐",
+            text = "Escolha a operação que deseja fazer!⭐",
             color = Color(0xFF6B2F0D),
             fontFamily = playfulFont,
-            fontSize = 20.sp
+            fontSize = 16.sp
         )
 
         Spacer(Modifier.height(16.dp))
+
+        ThreeDButton(
+            text = "Sair",
+            containerColor = Color(0xFFE84A4A),
+            contentColor = Color.White,
+            modifier = Modifier.fillMaxWidth(),
+            onClick = onExit,
+            fontSize = 22.sp,
+            height = 64.dp
+        )
+
+        Spacer(Modifier.height(12.dp))
 
         /*FooterCredits()*/
     }

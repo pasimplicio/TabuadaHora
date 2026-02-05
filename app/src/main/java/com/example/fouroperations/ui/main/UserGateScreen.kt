@@ -113,6 +113,8 @@ fun UserGateScreen(
 
         FooterCredits()
 
+        Spacer(Modifier.height(30.dp))
+
         if (isDialogOpen) {
             AlertDialog(
                 onDismissRequest = {
