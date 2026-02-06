@@ -2,7 +2,9 @@ package com.example.fouroperations.ui.main
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,6 +15,7 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -23,6 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -34,10 +38,19 @@ import com.example.fouroperations.ui.theme.FredokaFamily
 
 @Composable
 fun MenuScreen(
-    onPick: (Operation) -> Unit,
-    onExit: () -> Unit = {}
+    isMusicMuted: Boolean,
+    onToggleMusicMuted: () -> Unit,
+    onExit: () -> Unit,
+    onPick: (Operation) -> Unit
 ) {
     val playfulFont = FredokaFamily
+    val musicLabel = if (isMusicMuted) "Desligado" else "Ligado"
+    val musicIconRes = if (isMusicMuted) {
+        android.R.drawable.ic_lock_silent_mode
+    } else {
+        android.R.drawable.ic_lock_silent_mode_off
+    }
+    val musicTint = if (isMusicMuted) Color(0xFF9E9E9E) else Color(0xFF2E7D32)
 
     Column(
         modifier = Modifier
@@ -47,6 +60,32 @@ fun MenuScreen(
             .padding(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Box(
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.TopEnd
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .padding(top = 4.dp)
+                    .clickable(onClick = onToggleMusicMuted)
+            ) {
+                Icon(
+                    painter = painterResource(id = musicIconRes),
+                    contentDescription = "Som de fundo",
+                    tint = musicTint
+                )
+                Text(
+                    text = musicLabel,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = musicTint,
+                    fontFamily = playfulFont,
+                    textAlign = TextAlign.Center
+                )
+            }
+        }
+
         Image(
             painter = painterResource(id = R.drawable.logo),
             contentDescription = "TabuadadaHora",
@@ -116,25 +155,25 @@ fun MenuScreen(
         Spacer(Modifier.height(28.dp))
 
         Text(
-            text = "Escolha a operação que deseja fazer!⭐",
+            text = "Escolha a operação e manda ver!⭐",
             color = Color(0xFF6B2F0D),
             fontFamily = playfulFont,
-            fontSize = 16.sp
+            fontSize = 20.sp
         )
 
         Spacer(Modifier.height(16.dp))
 
         ThreeDButton(
             text = "Sair",
-            containerColor = Color(0xFFE84A4A),
-            contentColor = Color.White,
-            modifier = Modifier.fillMaxWidth(),
             onClick = onExit,
-            fontSize = 22.sp,
-            height = 64.dp
+            containerColor = Color(0xFF6D4C41),
+            modifier = Modifier.fillMaxWidth(),
+            fontFamily = playfulFont,
+            height = 68.dp,
+            fontSize = 22.sp
         )
 
-        Spacer(Modifier.height(12.dp))
+        Spacer(Modifier.height(16.dp))
 
         /*FooterCredits()*/
     }

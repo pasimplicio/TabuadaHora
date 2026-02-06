@@ -3,17 +3,21 @@ package com.example.fouroperations.ui.result
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -23,6 +27,8 @@ import com.example.fouroperations.ui.theme.FredokaFamily
 fun ResultScreen(
     stars: Int,
     max: Int,
+    isMusicMuted: Boolean,
+    onToggleMusicMuted: () -> Unit,
     onPlayAgain: () -> Unit
 ) {
     val scale by animateFloatAsState(
@@ -38,6 +44,17 @@ fun ResultScreen(
         stars >= (max * 0.4) -> "Muito bom! 😊"
         else -> "Vamos treinar mais! 💪🙂"
     }
+    val musicLabel = if (isMusicMuted) "Desligado" else "Ligado"
+    val musicIconRes = if (isMusicMuted) {
+        android.R.drawable.ic_lock_silent_mode
+    } else {
+        android.R.drawable.ic_lock_silent_mode_off
+    }
+    val musicTint = if (isMusicMuted) {
+        MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.6f)
+    } else {
+        MaterialTheme.colorScheme.onPrimaryContainer
+    }
 
     Column(
         modifier = Modifier
@@ -47,6 +64,32 @@ fun ResultScreen(
             .padding(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Box(
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.TopEnd
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .padding(top = 4.dp)
+                    .clickable(onClick = onToggleMusicMuted)
+            ) {
+                Icon(
+                    painter = painterResource(id = musicIconRes),
+                    contentDescription = "Som de fundo",
+                    tint = musicTint
+                )
+                Text(
+                    text = musicLabel,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = musicTint,
+                    fontFamily = FredokaFamily,
+                    textAlign = TextAlign.Center
+                )
+            }
+        }
+
         Spacer(Modifier.height(30.dp))
 
         Text(

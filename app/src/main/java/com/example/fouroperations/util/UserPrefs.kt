@@ -15,6 +15,7 @@ object UserPrefs {
     private const val PREFS_NAME = "tabuada_hora_prefs"
     private const val KEY_USERS = "users"
     private const val KEY_ACTIVE_USER = "active_user"
+    private const val KEY_MUSIC_MUTED = "music_muted"
 
     fun getUsers(context: Context): List<UserProfile> {
         val raw = prefs(context).getString(KEY_USERS, "[]").orEmpty()
@@ -64,6 +65,14 @@ object UserPrefs {
 
     fun setActiveUserId(context: Context, userId: String) {
         prefs(context).edit().putString(KEY_ACTIVE_USER, userId).apply()
+    }
+
+    fun isMusicMuted(context: Context): Boolean {
+        return prefs(context).getBoolean(KEY_MUSIC_MUTED, false)
+    }
+
+    fun setMusicMuted(context: Context, muted: Boolean) {
+        prefs(context).edit().putBoolean(KEY_MUSIC_MUTED, muted).apply()
     }
 
     fun updateBestScore(

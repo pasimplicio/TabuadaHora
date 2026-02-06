@@ -217,7 +217,7 @@ fun GameScreen(
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             ThreeDButton(
-                text = "Sair",
+                text = "Voltar",
                 onClick = onQuit,
                 containerColor = Color(0xFF6D4C41),
                 modifier = Modifier.weight(1f),
