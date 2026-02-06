@@ -2,14 +2,14 @@
 cls
 
 REM ================================
-REM CONFIGURAÇÕES (EDITE AQUI)
+REM CONFIGURAÇÕES
 REM ================================
 SET PROJECT_DIR=C:\Users\caema43907\FourOperations
 SET GITHUB_REPO_URL=https://github.com/pasimplicio/TabuadaHora.git
 SET BRANCH=main
 
 echo ================================
-echo Subindo projeto Android para GitHub
+echo Publicando projeto Android no GitHub
 echo ================================
 
 cd /d %PROJECT_DIR%
@@ -25,7 +25,7 @@ if not exist ".git" (
 )
 
 REM ================================
-REM CRIA .gitignore ANDROID CORRETO
+REM CRIA .gitignore ANDROID
 REM ================================
 if not exist ".gitignore" (
     echo Criando .gitignore...
@@ -60,10 +60,22 @@ echo Adicionando arquivos ao Git...
 git add .
 
 REM ================================
+REM SOLICITA MENSAGEM DO COMMIT
+REM ================================
+echo.
+set /p COMMIT_MSG=Digite a mensagem do commit: 
+
+if "%COMMIT_MSG%"=="" (
+    echo.
+    echo ERRO: Mensagem do commit vazia. Commit cancelado.
+    pause
+    exit /b 1
+)
+
+REM ================================
 REM COMMIT
 REM ================================
-echo Criando commit...
-git commit -m "Primeira versao do app TabuadaHora"
+git commit -m "%COMMIT_MSG%"
 
 REM ================================
 REM CONFIGURA BRANCH
