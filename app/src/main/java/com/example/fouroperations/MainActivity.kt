@@ -48,7 +48,7 @@ class MainActivity : ComponentActivity() {
             }
             isLooping = true
             if (isMusicMuted) {
-                setVolume(0f, 0f)
+                setVolume(0.5f, 0.5f)
             } else {
                 setVolume(0.8f, 0.8f)
             }
