@@ -7,37 +7,42 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.fouroperations.R
 import com.example.fouroperations.model.Operation
+import com.example.fouroperations.ui.components.FredokaFamily
 import com.example.fouroperations.ui.components.ThreeDButton
-import com.example.fouroperations.ui.components.ThreeDSurface
-import com.example.fouroperations.ui.theme.FredokaFamily
 
 @Composable
 fun MenuScreen(
+    adsRemoved: Boolean,
+    onRemoveAds: () -> Unit,
     isMusicMuted: Boolean,
     onToggleMusicMuted: () -> Unit,
     onExit: () -> Unit,
@@ -57,7 +62,8 @@ fun MenuScreen(
             .fillMaxSize()
             .background(Color(0xFFFFF2E9))
             .verticalScroll(rememberScrollState())
-            .padding(20.dp),
+            .padding(horizontal = 18.dp, vertical = 14.dp),
+        verticalArrangement = Arrangement.spacedBy(18.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(
@@ -93,6 +99,28 @@ fun MenuScreen(
         )
 
         Spacer(Modifier.height(24.dp))
+
+        if (!adsRemoved) {
+            ThreeDButton(
+                text = "Remover anúncios",
+                onClick = onRemoveAds,
+                containerColor = Color(0xFF4E342E),
+                modifier = Modifier.fillMaxWidth(),
+                fontFamily = playfulFont,
+                height = 60.dp,
+                fontSize = 20.sp
+            )
+        } else {
+            Text(
+                text = "Anúncios removidos ✅",
+                color = Color(0xFF2E7D32),
+                fontFamily = playfulFont,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold
+            )
+        }
+
+        Spacer(Modifier.height(16.dp))
 
         BannerLabel(text = "Adição e Subtração")
 
@@ -189,26 +217,35 @@ private fun RowScope.OperationTile(
     labelSize: TextUnit = 18.sp,
     onClick: () -> Unit
 ) {
-    ThreeDSurface(
-        containerColor = color,
-        onClick = onClick,
-        modifier = Modifier.weight(1f),
-        height = 132.dp
+    Card(
+        modifier = Modifier
+            .weight(1f)
+            .height(130.dp)
+            .shadow(10.dp, RoundedCornerShape(26.dp)),
+        shape = RoundedCornerShape(26.dp),
+        colors = CardDefaults.cardColors(containerColor = color),
+        onClick = onClick
     ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 12.dp, vertical = 10.dp),
+            verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             Text(
                 text = symbol,
                 fontSize = symbolSize,
-                fontWeight = FontWeight.ExtraBold,
+                fontWeight = FontWeight.Black,
                 color = Color.White,
                 fontFamily = fontFamily
             )
-            Spacer(Modifier.height(6.dp))
             Text(
                 text = label,
                 fontSize = labelSize,
                 fontWeight = FontWeight.Bold,
                 color = Color.White,
+                textAlign = TextAlign.Center,
                 fontFamily = fontFamily
             )
         }
@@ -216,44 +253,31 @@ private fun RowScope.OperationTile(
 }
 
 @Composable
-private fun BannerLabel(text: String) {
-    Surface(
-        color = Color(0xFFFF7A5C),
-        shape = MaterialTheme.shapes.medium,
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Text(
-            text = text,
-            modifier = Modifier.padding(vertical = 6.dp, horizontal = 12.dp),
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.White,
-            fontFamily = FredokaFamily
-        )
-    }
-}
-
-
-@Composable
-private fun SocialHandle(
-    iconRes: Int,
-    contentDescription: String,
-    handle: String
+private fun BannerLabel(
+    text: String,
+    height: Dp = 52.dp
 ) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(4.dp)
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(height),
+        shape = RoundedCornerShape(20.dp),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFFFFE0B2))
     ) {
-        Image(
-            painter = painterResource(id = iconRes),
-            contentDescription = contentDescription,
-            modifier = Modifier.height(14.dp)
-        )
-        Text(
-            text = handle,
-            fontSize = 12.sp,
-            color = Color.White,
-            fontFamily = FredokaFamily
-        )
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 14.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = text,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Black,
+                color = Color(0xFF6B2F0D),
+                textAlign = TextAlign.Center,
+                fontFamily = FredokaFamily
+            )
+        }
     }
 }

@@ -25,17 +25,19 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-
     kotlinOptions {
         jvmTarget = "17"
     }
-
-
 }
 
 dependencies {
 
-    val composeBom = platform("androidx.compose:compose-bom:2024.12.01")
+    // Monetização
+    implementation("com.google.android.gms:play-services-ads:24.9.0")
+    implementation("com.android.billingclient:billing-ktx:8.3.0")
+
+    // ✅ BOM COMPATÍVEL COM KOTLIN 2.0
+    val composeBom = platform("androidx.compose:compose-bom:2024.10.00")
     implementation(composeBom)
     androidTestImplementation(composeBom)
 
