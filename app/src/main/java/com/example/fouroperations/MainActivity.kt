@@ -3,6 +3,7 @@ package com.example.fouroperations.ui.main
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -47,12 +48,17 @@ class MainActivity : ComponentActivity() {
                 .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                 .build()
             setAudioAttributes(attrs)
-            resources.openRawResourceFd(R.raw.bg_music).use { afd ->
-                setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
+            val afd = resources.openRawResourceFd(R.raw.bg_music)
+            if (afd != null) {
+                afd.use { descriptor ->
+                    setDataSource(descriptor.fileDescriptor, descriptor.startOffset, descriptor.length)
+                }
+                isLooping = true
+                setVolume(if (isMusicMuted) 0f else 0.8f, if (isMusicMuted) 0f else 0.8f)
+                prepare()
+            } else {
+                Log.w("MainActivity", "bg_music resource not found; background music disabled.")
             }
-            isLooping = true
-            setVolume(if (isMusicMuted) 0f else 0.8f, if (isMusicMuted) 0f else 0.8f)
-            prepare()
         }
 
         setContent {

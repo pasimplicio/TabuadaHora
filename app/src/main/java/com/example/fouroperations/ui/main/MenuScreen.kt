@@ -36,7 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.fouroperations.R
 import com.example.fouroperations.model.Operation
-import com.example.fouroperations.ui.components.FredokaFamily
+import com.example.fouroperations.ui.components.FredokaFamily  // CORREÇÃO AQUI
 import com.example.fouroperations.ui.components.ThreeDButton
 
 @Composable
