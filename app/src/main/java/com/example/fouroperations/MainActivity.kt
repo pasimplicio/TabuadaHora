@@ -4,6 +4,7 @@ import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -123,7 +124,10 @@ private fun AppRoot(
     val billing = remember {
         BillingManager(
             appContext = context.applicationContext,
-            onAdsRemoved = { adsRemoved = true }
+            onAdsRemoved = { adsRemoved = true },
+            onError = { message ->
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+            }
         )
     }
 

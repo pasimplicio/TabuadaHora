@@ -14,10 +14,9 @@
         android:theme="@style/Theme.FourOperations"
         android:usesCleartextTraffic="true"> <!-- Para carregar anúncios de teste em HTTP -->
 
-        <!-- TODO: Troque pelo seu App ID do AdMob antes de publicar -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713" />
+            android:value="${ADMOB_APP_ID}" />
 
         <activity
             android:name=".ui.main.MainActivity"

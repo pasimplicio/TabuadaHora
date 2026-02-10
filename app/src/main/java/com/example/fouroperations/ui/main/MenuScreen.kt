@@ -66,40 +66,6 @@ fun MenuScreen(
         verticalArrangement = Arrangement.spacedBy(18.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Box(
-            modifier = Modifier.fillMaxWidth(),
-            contentAlignment = Alignment.TopEnd
-        ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .padding(top = 4.dp)
-                    .clickable(onClick = onToggleMusicMuted)
-            ) {
-                Icon(
-                    painter = painterResource(id = musicIconRes),
-                    contentDescription = "Som de fundo",
-                    tint = musicTint
-                )
-                Text(
-                    text = musicLabel,
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = musicTint,
-                    fontFamily = playfulFont,
-                    textAlign = TextAlign.Center
-                )
-            }
-        }
-
-        Image(
-            painter = painterResource(id = R.drawable.logo),
-            contentDescription = "TabuadadaHora",
-            modifier = Modifier.height(200.dp)
-        )
-
-        Spacer(Modifier.height(24.dp))
-
         if (!adsRemoved) {
             ThreeDButton(
                 text = "Remover anúncios",
@@ -121,6 +87,14 @@ fun MenuScreen(
         }
 
         Spacer(Modifier.height(16.dp))
+
+        Image(
+            painter = painterResource(id = R.drawable.logo),
+            contentDescription = "TabuadadaHora",
+            modifier = Modifier.height(200.dp)
+        )
+
+        Spacer(Modifier.height(24.dp))
 
         BannerLabel(text = "Adição e Subtração")
 
@@ -188,6 +162,32 @@ fun MenuScreen(
             fontFamily = playfulFont,
             fontSize = 20.sp
         )
+
+        Box(
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.TopCenter
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .padding(top = 4.dp)
+                    .clickable(onClick = onToggleMusicMuted)
+            ) {
+                Icon(
+                    painter = painterResource(id = musicIconRes),
+                    contentDescription = "Som de fundo",
+                    tint = musicTint
+                )
+                Text(
+                    text = musicLabel,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = musicTint,
+                    fontFamily = playfulFont,
+                    textAlign = TextAlign.Center
+                )
+            }
+        }
 
         Spacer(Modifier.height(16.dp))
 
